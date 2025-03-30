@@ -11,6 +11,8 @@ This project implements an automated system for creating, analyzing, and solving
 - **Documentation**: Detailed documentation for all components
 - **Type Safety**: Type hints throughout the codebase
 - **Code Organization**: Clear separation of concerns between agents and utilities
+- **Problem Management**: Organized storage of problems and solutions
+- **Automated Testing**: Comprehensive test suites with performance benchmarks
 
 ## Project Structure
 
@@ -19,9 +21,31 @@ This project implements an automated system for creating, analyzing, and solving
 ├── agents.py           # Specialized AI agents for different tasks
 ├── problem_solver.py   # Problem management and workflow coordination
 ├── problems/          # Storage for problem descriptions and analysis
-├── solutions/         # Implemented solutions
-└── tests/            # Test suites for solutions
+│   ├── solved/       # Successfully solved problems
+│   └── unsolved/     # Problems waiting to be solved
 ```
+
+## Problem Organization
+
+### Problem Structure
+Each problem is organized as follows:
+```
+problems/
+├── solved/
+│   └── problem_name/
+│       ├── solution.py      # Implementation
+│       ├── test_solution.py # Test suite
+│       └── metadata.json    # Problem metadata
+└── unsolved/
+    └── problem_name.txt    # Problem description
+```
+
+### Solution Structure
+Each solution includes:
+- Implementation with type hints and docstrings
+- Comprehensive test suite
+- Performance benchmarks
+- Metadata with problem information
 
 ## Agents
 
@@ -30,41 +54,46 @@ This project implements an automated system for creating, analyzing, and solving
 - Identifies requirements, constraints, and edge cases
 - Specifies error handling and validation requirements
 - Determines performance requirements
+- Creates problem metadata
 
 ### Test Engineer
 - Creates comprehensive test suites
 - Covers input validation, error handling, and edge cases
 - Implements performance tests
 - Follows testing best practices
+- Ensures test coverage
 
 ### Python Developer
 - Implements robust solutions
 - Handles all error cases and input validation
 - Follows coding best practices
 - Optimizes for performance
+- Maintains code quality
 
 ## Usage
 
-```python
-from problem_solver import ProblemManager
+The system can be run using the command-line interface:
 
-# Initialize the problem manager
-manager = ProblemManager()
+```bash
+python main.py
+```
 
-# Create and solve a problem
-problem_path, solution_path, test_path = manager.solve_problem(
-    description="Implement a function that finds the longest palindrome in a string",
-    difficulty="medium"
-)
+This will:
+1. Process any unsolved problems in the `problems/unsolved/` directory
+2. Generate solutions with comprehensive test suites
+3. Save the results in the `problems/solved/` directory
 
-# Create a problem without solving
-problem_id, problem_content = manager.create_problem(
-    description="Find all prime numbers up to n using the Sieve of Eratosthenes",
-    difficulty="hard"
-)
+Each solution includes:
+- Implementation file (`solution.py`)
+- Test suite (`test_solution.py`)
+- Problem metadata (`metadata.json`)
 
-# Implement a solution for an existing problem
-solution_path, test_path = manager.implement_solution(problem_id, problem_content)
+Example output:
+```
+Processing problem: find_subarray_sum
+Generating solution...
+Running tests...
+Solution saved to: problems/solved/find_subarray_sum/
 ```
 
 ## Requirements
@@ -73,6 +102,7 @@ solution_path, test_path = manager.implement_solution(problem_id, problem_conten
 - OpenAI API key (set as environment variable `OPENAI_API_KEY`)
 - LangChain
 - pytest (for running tests)
+- typing-extensions (for enhanced type hints)
 
 ## Installation
 
@@ -83,8 +113,35 @@ solution_path, test_path = manager.implement_solution(problem_id, problem_conten
    ```
 3. Set up your OpenAI API key:
    ```bash
+   # On Windows (PowerShell)
+   $env:OPENAI_API_KEY='your-api-key-here'
+   
+   # On Unix/Linux/MacOS
    export OPENAI_API_KEY='your-api-key-here'
    ```
+
+## Development Workflow
+
+1. **Problem Creation**
+   - Create problem description in `problems/unsolved/`
+   - Include requirements, constraints, and examples
+
+2. **Problem Analysis**
+   - Research Analyst analyzes requirements
+   - Creates detailed breakdown and metadata
+
+3. **Test Development**
+   - Test Engineer creates comprehensive test suite
+   - Includes edge cases and performance tests
+
+4. **Implementation**
+   - Python Developer implements solution
+   - Follows best practices and optimizes performance
+
+5. **Validation**
+   - Run test suite
+   - Verify performance requirements
+   - Check documentation and type hints
 
 ## Contributing
 

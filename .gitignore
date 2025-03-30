@@ -22,8 +22,8 @@ wheels/
 
 # Virtual Environment
 venv/
-env/
 ENV/
+env/
 
 # IDE
 .idea/
@@ -33,6 +33,10 @@ ENV/
 
 # Environment variables
 .env
+
+# Project specific
+problems/solved/*/
+!problems/solved/.gitkeep
 
 # Logs
 *.log
