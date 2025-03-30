@@ -1,0 +1,20 @@
+Implement a function called 'find_subarray_sum' that finds a contiguous subarray 
+within a list of integers that has a given sum. The function should handle the 
+following requirements:
+
+1. Input:
+   - nums: A list of integers (positive and negative)
+   - target_sum: The target sum to find
+
+2. Output:
+   - Return a tuple of (start_index, end_index) representing the inclusive range
+     of the subarray that sums to target_sum
+   - If no such subarray exists, return None
+
+3. If multiple solutions exist, return the subarray with:
+   a) Minimum length
+   b) If multiple subarrays have the same minimum length, return the one that 
+      starts with the lowest index
+
+Example:
+find_subarray_sum([1, -3, 2, 4, -2, 3, 1, -2], 5) -> (2, 3)  # [2, 4] sums to 5 

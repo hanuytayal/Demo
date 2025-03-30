@@ -54,16 +54,31 @@ class ResearchAnalyst(BaseAgent):
         Your task is to analyze coding problems and provide comprehensive breakdowns that include:
         1. Problem requirements and constraints
         2. Key components and their relationships
-        3. Potential challenges and edge cases
-        4. Suggested approach for implementation
-        5. Time and space complexity requirements
-        6. Performance optimization opportunities
-        7. Memory usage considerations
-        8. Algorithmic efficiency requirements
-        9. Data structure selection criteria
-        10. Potential bottlenecks and how to avoid them
+        3. Error handling and validation requirements:
+           - Required input validation checks
+           - Type checking requirements
+           - Expected exceptions and error conditions
+           - Edge cases that must be handled
+           - Invalid input scenarios
+           - Boundary conditions
+        4. Implementation considerations:
+           - Suggested approach
+           - Required error handling
+           - Input validation strategy
+           - Type checking approach
+        5. Performance requirements:
+           - Time complexity constraints
+           - Space complexity constraints
+           - Memory usage considerations
+           - Performance optimization opportunities
+        6. Testing requirements:
+           - Critical test cases
+           - Error scenarios to test
+           - Edge cases to verify
+           - Performance benchmarks needed
         
-        Focus on identifying performance-critical aspects and optimization opportunities."""
+        Focus first on correctness and robustness, then on performance optimization.
+        Provide clear guidance on error handling and input validation requirements."""
     
     def analyze_problem(self, problem_description):
         messages = self._create_messages(
@@ -72,50 +87,6 @@ class ResearchAnalyst(BaseAgent):
         )
         response = self.llm.invoke(messages)
         return response.content
-
-class PythonDeveloper(BaseAgent):
-    """Agent responsible for writing clean and efficient code solutions."""
-    
-    def __init__(self, model_name="gpt-4"):
-        super().__init__(model_name)
-        self.system_prompt = """You are a skilled Python developer with extensive experience 
-        in writing production-quality code. You follow best practices and ensure code is 
-        maintainable and efficient.
-        
-        Your task is to implement solutions that:
-        1. Follow Python best practices and PEP 8 guidelines
-        2. Include comprehensive documentation
-        3. Handle error cases appropriately
-        4. Are efficient and maintainable
-        5. Include type hints
-        6. Include docstrings for all functions and classes
-        7. Prioritize performance optimization:
-           - Avoid creating unnecessary string copies
-           - Use efficient data structures
-           - Minimize memory allocations
-           - Consider time and space complexity
-           - Use in-place operations when possible
-           - Avoid expensive operations (regex, string copies)
-           - Use two-pointer techniques for string/array operations
-           - Implement early returns for better performance
-        8. Handle edge cases efficiently
-        9. Use appropriate data structures for the problem
-        10. Consider memory usage and garbage collection
-        11. Implement efficient algorithms (O(n) or better when possible)
-        12. Avoid redundant computations
-        13. Use built-in functions when they're more efficient
-        14. Consider cache locality and memory access patterns
-        
-        Provide ONLY the implementation code in a Python code block (```python ... ```).
-        Focus on creating efficient, production-ready code that will pass performance tests."""
-    
-    def implement_solution(self, analysis):
-        messages = self._create_messages(
-            self.system_prompt,
-            f"Please implement a solution based on this analysis:\n\n{analysis}"
-        )
-        response = self.llm.invoke(messages)
-        return self._extract_code(response.content)
 
 class TestEngineer(BaseAgent):
     """Agent responsible for creating and running comprehensive test cases."""
@@ -126,45 +97,94 @@ class TestEngineer(BaseAgent):
         through thorough testing. You excel at identifying edge cases and potential failure points.
         
         Your task is to create comprehensive test suites that include:
-        1. Unit tests for individual components
-        2. Integration tests for component interactions
-        3. Edge case testing
-        4. Error case testing
-        5. Performance testing:
-           - Test with large inputs
-           - Measure execution time
-           - Check memory usage
-           - Verify time complexity
-           - Test with various input sizes
-           - Include stress tests
-        6. Memory leak testing
-        7. Concurrency testing (if applicable)
-        8. Resource usage testing
+        1. Input validation tests:
+           - Type checking tests
+           - Invalid input tests
+           - Boundary condition tests
+           - Null/empty input tests
+        2. Error handling tests:
+           - Exception testing
+           - Error message validation
+           - Error condition handling
+        3. Edge case tests:
+           - Minimum/maximum values
+           - Empty/null cases
+           - Boundary conditions
+           - Special character handling
+        4. Functional tests:
+           - Basic functionality
+           - Complex scenarios
+           - Integration points
+        5. Performance tests:
+           - Large input testing
+           - Execution time measurement
+           - Memory usage verification
+           - Complexity validation
         
         Provide ONLY the test code in a Python code block (```python ... ```).
         The test code should:
         1. NOT include any imports (they will be handled separately)
         2. NOT include the implementation code
-        3. Use pytest style tests (no unittest)
-        4. Include type hints where appropriate
-        5. Include docstrings for test functions
+        3. Use pytest style tests
+        4. Include type hints
+        5. Include docstrings
         6. Follow PEP 8 guidelines
-        7. Assume all necessary functions are already imported
-        8. Use time.time() for performance testing
-        9. Group related tests into separate functions
-        10. Use descriptive test names that explain what is being tested
-        11. Include clear comments explaining test cases
-        12. Use pytest.raises for testing exceptions
-        13. Include assertions with descriptive messages
-        14. Test both successful and failure cases
-        15. Include performance benchmarks
-        16. Test with various input sizes
-        17. Include stress tests for performance-critical functions"""
+        7. Group tests logically
+        8. Include clear error messages in assertions
+        9. Test both success and failure cases
+        10. Include performance benchmarks"""
     
-    def create_tests(self, code):
+    def create_tests(self, analysis):
+        """Create tests based on the problem analysis."""
         messages = self._create_messages(
             self.system_prompt,
-            f"Please create a comprehensive test suite for this code:\n\n{code}"
+            f"Please create a comprehensive test suite based on this analysis:\n\n{analysis}"
+        )
+        response = self.llm.invoke(messages)
+        return self._extract_code(response.content)
+
+class PythonDeveloper(BaseAgent):
+    """Agent responsible for writing clean and efficient code solutions."""
+    
+    def __init__(self, model_name="gpt-4"):
+        super().__init__(model_name)
+        self.system_prompt = """You are a skilled Python developer with extensive experience 
+        in writing production-quality code. You follow best practices and ensure code is 
+        maintainable, robust, and efficient.
+        
+        Your task is to implement solutions that:
+        1. Handle all error cases and input validation:
+           - Validate input types
+           - Check for invalid inputs
+           - Handle edge cases
+           - Raise appropriate exceptions
+           - Include descriptive error messages
+        2. Follow coding best practices:
+           - Use type hints
+           - Include comprehensive docstrings
+           - Follow PEP 8 guidelines
+           - Write clear, maintainable code
+        3. Implement robust error handling:
+           - Validate all inputs
+           - Handle edge cases gracefully
+           - Use appropriate exception types
+           - Provide helpful error messages
+        4. Optimize for performance:
+           - Use efficient algorithms
+           - Choose appropriate data structures
+           - Minimize memory usage
+           - Avoid unnecessary operations
+        
+        Provide ONLY the implementation code in a Python code block (```python ... ```).
+        Focus first on correctness and robustness, then on optimization."""
+    
+    def implement_solution(self, analysis, tests):
+        """Implement solution based on analysis and test requirements."""
+        messages = self._create_messages(
+            self.system_prompt,
+            f"Please implement a solution that satisfies this analysis and passes these tests:\n\n"
+            f"Analysis:\n{analysis}\n\n"
+            f"Tests:\n{tests}"
         )
         response = self.llm.invoke(messages)
         return self._extract_code(response.content)

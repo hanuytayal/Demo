@@ -186,15 +186,15 @@ def process_problem(problem_file):
         analysis = agents['research_analyst'].analyze_problem(problem_description)
         logger.info("Analysis complete.")
         
-        # Step 2: Python Developer implements the solution
-        logger.info("Step 2: Implementing solution...")
-        code = agents['python_developer'].implement_solution(analysis)
-        logger.info("Implementation complete.")
-        
-        # Step 3: Test Engineer creates and runs tests
-        logger.info("Step 3: Creating tests...")
-        tests = agents['test_engineer'].create_tests(code)
+        # Step 2: Test Engineer creates tests
+        logger.info("Step 2: Creating tests...")
+        tests = agents['test_engineer'].create_tests(analysis)
         logger.info("Tests created.")
+        
+        # Step 3: Python Developer implements the solution
+        logger.info("Step 3: Implementing solution...")
+        code = agents['python_developer'].implement_solution(analysis, tests)
+        logger.info("Implementation complete.")
         
         # Save the solution
         solution_file = save_solution(
