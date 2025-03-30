@@ -1,157 +1,82 @@
-# Automated Problem Solving System
+# Automated Problem-Solving System
 
-This project implements an automated system for creating, analyzing, and solving coding problems using a team of specialized AI agents. The system focuses on producing high-quality, well-tested solutions with comprehensive documentation and error handling.
+This system uses AI agents to automatically analyze, implement, and test coding problems. It follows a structured workflow to ensure high-quality solutions with comprehensive test coverage.
 
 ## Features
 
-- **Problem Analysis**: Detailed breakdown of problem requirements, constraints, and edge cases
-- **Test-Driven Development**: Comprehensive test suites created before implementation
-- **Robust Implementation**: Solutions with thorough error handling and input validation
-- **Performance Optimization**: Focus on efficient algorithms and data structures
-- **Documentation**: Detailed documentation for all components
-- **Type Safety**: Type hints throughout the codebase
-- **Code Organization**: Clear separation of concerns between agents and utilities
-- **Problem Management**: Organized storage of problems and solutions
-- **Automated Testing**: Comprehensive test suites with performance benchmarks
+- Automated problem analysis and breakdown
+- Comprehensive test suite generation
+- Clean and efficient code implementation
+- Detailed solution documentation
+- Test result validation and reporting
 
-## Project Structure
+## Setup
 
-```
-.
-├── agents.py           # Specialized AI agents for different tasks
-├── problem_solver.py   # Problem management and workflow coordination
-├── problems/          # Storage for problem descriptions and analysis
-│   ├── solved/       # Successfully solved problems
-│   └── unsolved/     # Problems waiting to be solved
-```
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd <repository-name>
+   ```
 
-## Problem Organization
+2. Create and activate a virtual environment:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
 
-### Problem Structure
-Each problem is organized as follows:
-```
-problems/
-├── solved/
-│   └── problem_name/
-│       ├── solution.py      # Implementation
-│       ├── test_solution.py # Test suite
-│       └── metadata.json    # Problem metadata
-└── unsolved/
-    └── problem_name.txt    # Problem description
-```
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-### Solution Structure
-Each solution includes:
-- Implementation with type hints and docstrings
-- Comprehensive test suite
-- Performance benchmarks
-- Metadata with problem information
-
-## Agents
-
-### Research Analyst
-- Analyzes problems and provides detailed breakdowns
-- Identifies requirements, constraints, and edge cases
-- Specifies error handling and validation requirements
-- Determines performance requirements
-- Creates problem metadata
-
-### Test Engineer
-- Creates comprehensive test suites
-- Covers input validation, error handling, and edge cases
-- Implements performance tests
-- Follows testing best practices
-- Ensures test coverage
-
-### Python Developer
-- Implements robust solutions
-- Handles all error cases and input validation
-- Follows coding best practices
-- Optimizes for performance
-- Maintains code quality
+4. Create a `.env` file with your OpenAI API key:
+   ```
+   OPENAI_API_KEY=your-api-key-here
+   ```
 
 ## Usage
 
-The system can be run using the command-line interface:
+1. Place your problem descriptions in `problems/unsolved/` as `.txt` files.
 
-```bash
-python main.py
+2. Run the system:
+   ```bash
+   python main.py
+   ```
+
+3. The system will:
+   - Analyze each problem
+   - Generate test cases
+   - Implement solutions
+   - Run tests
+   - Save results in `problems/solved/`
+
+## Directory Structure
+
+```
+.
+├── main.py                 # Main orchestration script
+├── agents.py              # AI agent implementations
+├── problems/              # Problem storage
+│   ├── unsolved/         # Problem descriptions
+│   └── solved/           # Completed solutions
+├── .env                   # Environment variables
+└── requirements.txt       # Dependencies
 ```
 
-This will:
-1. Process any unsolved problems in the `problems/unsolved/` directory
-2. Generate solutions with comprehensive test suites
-3. Save the results in the `problems/solved/` directory
+## Solution Format
 
-Each solution includes:
-- Implementation file (`solution.py`)
-- Test suite (`test_solution.py`)
-- Problem metadata (`metadata.json`)
-
-Example output:
-```
-Processing problem: find_subarray_sum
-Generating solution...
-Running tests...
-Solution saved to: problems/solved/find_subarray_sum/
-```
+Each solution is stored in a timestamped directory containing:
+- `solution.py`: Implementation code
+- `test_solution.py`: Test suite
+- `solution.json`: Metadata and results
 
 ## Requirements
 
 - Python 3.8+
-- OpenAI API key (set as environment variable `OPENAI_API_KEY`)
-- LangChain
-- pytest (for running tests)
-- typing-extensions (for enhanced type hints)
+- OpenAI API key
+- Dependencies listed in requirements.txt
 
-## Installation
+## Documentation
 
-1. Clone the repository
-2. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-3. Set up your OpenAI API key:
-   ```bash
-   # On Windows (PowerShell)
-   $env:OPENAI_API_KEY='your-api-key-here'
-   
-   # On Unix/Linux/MacOS
-   export OPENAI_API_KEY='your-api-key-here'
-   ```
-
-## Development Workflow
-
-1. **Problem Creation**
-   - Create problem description in `problems/unsolved/`
-   - Include requirements, constraints, and examples
-
-2. **Problem Analysis**
-   - Research Analyst analyzes requirements
-   - Creates detailed breakdown and metadata
-
-3. **Test Development**
-   - Test Engineer creates comprehensive test suite
-   - Includes edge cases and performance tests
-
-4. **Implementation**
-   - Python Developer implements solution
-   - Follows best practices and optimizes performance
-
-5. **Validation**
-   - Run test suite
-   - Verify performance requirements
-   - Check documentation and type hints
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
+For detailed system architecture and workflow, see [ARCHITECTURE.md](ARCHITECTURE.md).
 
