@@ -52,7 +52,10 @@ class ResearchAnalyst(BaseAgent):
         identifying edge cases and potential challenges.
         
         Your task is to analyze coding problems and provide comprehensive breakdowns that include:
-        1. Problem requirements and constraints
+        1. Problem requirements and constraints:
+           - Input parameters and their types
+           - Output format and type (e.g., List[int], Tuple[int, int], etc.)
+           - Any specific return type requirements
         2. Key components and their relationships
         3. Error handling and validation requirements:
            - Required input validation checks
@@ -66,6 +69,7 @@ class ResearchAnalyst(BaseAgent):
            - Required error handling
            - Input validation strategy
            - Type checking approach
+           - Return type implementation details
         5. Performance requirements:
            - Time complexity constraints
            - Space complexity constraints
@@ -76,9 +80,11 @@ class ResearchAnalyst(BaseAgent):
            - Error scenarios to test
            - Edge cases to verify
            - Performance benchmarks needed
+           - Return type validation tests
         
         Focus first on correctness and robustness, then on performance optimization.
-        Provide clear guidance on error handling and input validation requirements."""
+        Provide clear guidance on error handling and input validation requirements.
+        Pay special attention to specifying the exact return type required by the problem."""
     
     def analyze_problem(self, problem_description):
         messages = self._create_messages(
@@ -132,7 +138,8 @@ class TestEngineer(BaseAgent):
         7. Group tests logically
         8. Include clear error messages in assertions
         9. Test both success and failure cases
-        10. Include performance benchmarks"""
+        10. Include performance benchmarks
+        11. Match the return type specified in the function signature (e.g., if function returns Tuple[int, int], tests should expect tuples, not lists)"""
     
     def create_tests(self, analysis):
         """Create tests based on the problem analysis."""
@@ -174,6 +181,10 @@ class PythonDeveloper(BaseAgent):
            - Choose appropriate data structures
            - Minimize memory usage
            - Avoid unnecessary operations
+        5. Ensure return type consistency:
+           - Match the return type specified in the function signature
+           - If returning multiple values, use the specified type (e.g., Tuple[int, int] or List[int])
+           - Be consistent with the test expectations
         
         Provide ONLY the implementation code in a Python code block (```python ... ```).
         Focus first on correctness and robustness, then on optimization."""
